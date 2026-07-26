@@ -1,0 +1,1441 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ======= EDITÁVEL: título da aba do navegador e descrição para o Google ======= -->
+<title>Leal Souto & Carvalho Advocacia | Montes Claros - MG</title>
+<meta name="description" content="Leal Souto & Carvalho Advocacia. Escritório em Montes Claros - MG com atuação em Direito Empresarial, Trabalhista, Previdenciário, Família e Sucessões e Indenizações.">
+
+<!-- ======= EDITÁVEL: como o link aparece quando compartilhado no WhatsApp/Instagram (Open Graph) =======
+     "og:image" precisa ser um endereço completo (https://...) de uma imagem, não um caminho local.
+     Quando o site estiver publicado no GitHub Pages, troque pela URL da imagem publicada (ex: logo ou foto das sócias). -->
+<meta property="og:title" content="Leal Souto & Carvalho Advocacia">
+<meta property="og:description" content="Por trás de cada sobrenome há uma história. Por trás de cada história, há uma especialista.">
+<meta property="og:image" content="img/socias.jpg">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+
+<!-- ======= EDITÁVEL: ícone da aba do navegador (favicon) =======
+     Usa o monograma dourado de verdade (img/logo-icone-dourado.png). Esse arquivo é um recorte
+     que eu fiz a partir do seu "logo sem fundo.png", pegando só o símbolo entre colchetes, sem o
+     nome por baixo (pra caber direitinho no quadradinho pequeno da aba do navegador).
+     Se um dia vocês tiverem um ícone quadrado feito sob medida, é só trocar o caminho abaixo. -->
+<link rel="icon" type="image/png" href="img/logo-icone-dourado.png">
+
+<!-- Fontes do Google Fonts: Cormorant Garamond para títulos, Inter para textos -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  /* ==========================================================================
+     PALETA DE CORES DA MARCA
+     "--nome" é uma variável CSS: um apelido para uma cor, que a gente define
+     uma vez aqui e reaproveita no resto do arquivo (ex.: var(--dourado)).
+     Se quiser mudar um tom no futuro, troca só aqui embaixo e o site inteiro
+     é atualizado sozinho.
+     ======= EDITÁVEL: cores da marca ======= */
+  :root {
+    --marrom-escuro: #3E2A1E; /* fundo de blocos, rodapé */
+    --marrom:        #5A4032; /* textos de destaque, títulos */
+    --dourado:       #C9A227; /* detalhes, linhas, hover */
+    --dourado-claro: #E0C877; /* realces sobre fundo escuro */
+    --bege:          #D9D2C5; /* fundos alternados */
+    --off-white:     #F7F4EF; /* fundo principal */
+    --texto:         #2B211A;
+
+    /* Fontes: título (serifada) e corpo (sans-serif) */
+    --fonte-titulo: 'Cormorant Garamond', serif;
+    --fonte-corpo: 'Inter', sans-serif;
+  }
+
+  /* Reset básico: navegadores aplicam margens/paddings diferentes por padrão
+     para cada elemento. Isso zera tudo para começarmos do mesmo ponto. */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth; /* faz os links do menu rolarem suavemente até a seção */
+  }
+
+  body {
+    font-family: var(--fonte-corpo);
+    color: var(--texto);
+    background-color: var(--off-white);
+    line-height: 1.6;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--fonte-titulo);
+    font-weight: 600;
+    color: var(--marrom);
+    letter-spacing: 0.03em;
+  }
+
+  /* Textos de apoio em caixa alta com espaçamento generoso entre letras,
+     como pedido para combinar com a estética do logotipo. */
+  .caixa-alta {
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-size: 0.85rem;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  img {
+    max-width: 100%;
+    display: block;
+  }
+
+  /* Acessibilidade: quando alguém navega pelo teclado (tecla Tab), o item
+     em foco precisa de um contorno visível — nunca remova isso. */
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid var(--dourado);
+    outline-offset: 3px;
+  }
+
+  /* ==========================================================================
+     MENU (cabeçalho fixo)
+     "position: fixed" faz o menu grudar no topo da tela e ficar ali mesmo
+     quando a página rola. Começa transparente (para combinar com a capa
+     escura) e vira sólido quando o JavaScript detecta que a página rolou
+     (classe .rolado, adicionada lá embaixo no <script>).
+     ======= EDITÁVEL: ajustes visuais do menu ======= */
+  #cabecalho {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: transparent;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  #cabecalho.rolado {
+    background-color: var(--marrom-escuro);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  .cabecalho-conteudo {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.1rem 1.5rem;
+  }
+
+  .logo-link {
+    color: var(--dourado-claro);
+    line-height: 0; /* evita espaço extra embaixo do SVG */
+  }
+
+  .logo-img {
+    width: 46px;
+    height: auto;
+  }
+
+  .nav-lista {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+  }
+
+  .nav-lista a {
+    display: inline-block;
+    white-space: nowrap;
+    color: var(--off-white);
+    font-size: 0.76rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 0.3rem 0;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+
+  .nav-lista a:hover,
+  .nav-lista a:focus-visible {
+    border-color: var(--dourado);
+    color: var(--dourado-claro);
+  }
+
+  /* O botão hambúrguer fica escondido no desktop por padrão */
+  #botao-menu {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--off-white);
+    cursor: pointer;
+    padding: 0.3rem;
+  }
+
+  /* ======= Celular / telas médias: menu vira hambúrguer =======
+     O menu agora tem 7 itens, então precisamos de uma tela mais larga (1100px)
+     pra caber tudo numa linha só sem quebrar — por isso esse número é maior
+     que os 860px usados como "corte" nas outras seções do site. */
+  @media (max-width: 1100px) {
+    #botao-menu {
+      display: block;
+      z-index: 1001;
+    }
+
+    .nav-lista {
+      position: fixed;
+      top: 0;
+      right: 0;
+      height: 100vh;
+      width: min(75vw, 320px);
+      flex-direction: column;
+      justify-content: center;
+      gap: 2.2rem;
+      background-color: var(--marrom-escuro);
+      padding: 2rem;
+      transform: translateX(100%);
+      transition: transform 0.35s ease;
+      box-shadow: -4px 0 20px rgba(0, 0, 0, 0.25);
+    }
+
+    /* Classe adicionada pelo JavaScript quando o botão é clicado */
+    .nav-lista.aberto {
+      transform: translateX(0);
+    }
+
+    .nav-lista a {
+      font-size: 0.95rem;
+    }
+  }
+
+  /* ==========================================================================
+     CAPA (seção "Início")
+     100vh = 100% da altura da tela do visitante, ou seja, a capa preenche
+     a tela toda ao abrir o site, antes de rolar.
+     ======= EDITÁVEL: ajustes visuais da capa ======= */
+  .secao-capa {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: var(--marrom-escuro);
+    color: var(--off-white);
+    padding: 7rem 1.5rem 4rem;
+    position: relative;
+  }
+
+  .capa-conteudo {
+    max-width: 640px;
+  }
+
+  .capa-logo-img {
+    width: 92px;
+    margin: 0 auto 2rem;
+  }
+
+  .secao-capa h1 {
+    color: var(--off-white);
+    font-size: 2rem;
+    line-height: 1.3;
+    margin-bottom: 1.5rem;
+  }
+
+  .capa-frase {
+    font-size: 1rem;
+    color: var(--bege);
+    line-height: 1.9;
+    margin-bottom: 2.5rem;
+  }
+
+  .botao-cta {
+    display: inline-block;
+    background-color: var(--dourado);
+    color: var(--marrom-escuro);
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 0.95rem 2.4rem;
+    border-radius: 2px;
+    transition: background-color 0.25s ease, transform 0.25s ease;
+  }
+
+  .botao-cta:hover,
+  .botao-cta:focus-visible {
+    background-color: var(--dourado-claro);
+    transform: translateY(-2px);
+  }
+
+  .indicador-rolagem {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--dourado);
+    animation: flutuar 2s ease-in-out infinite;
+  }
+
+  @keyframes flutuar {
+    0%, 100% { transform: translate(-50%, 0); }
+    50%      { transform: translate(-50%, 8px); }
+  }
+
+  /* A partir de telas maiores (tablet/desktop), aumenta o título da capa */
+  @media (min-width: 700px) {
+    .secao-capa h1 {
+      font-size: 3.1rem;
+    }
+    .capa-frase {
+      font-size: 1.1rem;
+    }
+  }
+
+  /* ==========================================================================
+     ANIMAÇÃO DE "FADE-IN" AO ROLAR A PÁGINA
+     Qualquer elemento com a classe "reveal" começa invisível e levemente
+     deslocado para baixo. Quando ele aparece na tela (o JavaScript detecta
+     isso), ganha a classe "visivel" e some suavemente para o lugar certo.
+     Vamos usar essa classe "reveal" nas próximas seções que criarmos. */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .reveal.visivel {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ==========================================================================
+     SEÇÃO "O ESCRITÓRIO"
+     "grid" é outro jeito de organizar elementos lado a lado (como o flex do
+     menu, mas melhor pra layouts em colunas). No celular fica 1 coluna só
+     (texto em cima, foto embaixo); a partir de 860px vira 2 colunas.
+     ======= EDITÁVEL: ajustes visuais da seção ======= */
+  .secao-escritorio {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 5rem 1.5rem;
+  }
+
+  .escritorio-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .destaque-dourado {
+    color: var(--dourado);
+    margin-bottom: 0.8rem;
+  }
+
+  .secao-escritorio h2 {
+    font-size: 2.1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .escritorio-texto p {
+    margin-bottom: 1.2rem;
+  }
+
+  .escritorio-fechamento {
+    font-style: italic;
+    color: var(--marrom);
+    border-left: 2px solid var(--dourado);
+    padding-left: 1.2rem;
+  }
+
+  .escritorio-imagem img {
+    border-radius: 6px;
+    box-shadow: 0 20px 40px rgba(43, 33, 26, 0.2);
+  }
+
+  @media (min-width: 860px) {
+    .escritorio-grid {
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 4.5rem;
+    }
+  }
+
+  /* ==========================================================================
+     SEÇÃO "AS SÓCIAS"
+     Fundo bege para alternar com o off-white das seções vizinhas, como
+     pedido na identidade visual (fundos alternados dão ritmo à página).
+     ======= EDITÁVEL: ajustes visuais da seção ======= */
+  .secao-socias {
+    background-color: var(--bege);
+    padding: 5rem 1.5rem;
+  }
+
+  .socias-cabecalho {
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto 3rem;
+  }
+
+  .socias-cabecalho h2 {
+    font-size: 2.1rem;
+  }
+
+  .socias-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .socia-card {
+    background-color: var(--off-white);
+    border-radius: 6px;
+    padding: 2rem 1.7rem 2.3rem;
+    text-align: center;
+    box-shadow: 0 16px 32px rgba(43, 33, 26, 0.12);
+  }
+
+  /* aspect-ratio força a proporção 3:4 (retrato) mesmo antes da imagem carregar,
+     evitando que o layout "pule" quando a foto aparece. */
+  .socia-foto {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    border-radius: 4px;
+    margin-bottom: 1.6rem;
+  }
+
+  .socia-foto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .socia-sobrenome {
+    color: var(--dourado);
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+  }
+
+  .socia-card h3 {
+    font-size: 1.35rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .socia-oab {
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    color: var(--marrom);
+    margin-bottom: 1.2rem;
+  }
+
+  .socia-frase {
+    font-size: 0.93rem;
+    line-height: 1.75;
+    margin-bottom: 1.4rem;
+  }
+
+  .socia-areas {
+    list-style: none;
+    text-align: left;
+    border-top: 1px solid var(--bege);
+    padding-top: 1.1rem;
+  }
+
+  .socia-areas li {
+    position: relative;
+    font-size: 0.85rem;
+    padding-left: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  /* Um pontinho dourado no lugar de marcador de lista padrão */
+  .socia-areas li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: var(--dourado);
+  }
+
+  @media (min-width: 860px) {
+    .socias-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+  }
+
+  /* ==========================================================================
+     SEÇÃO "NOSSA EQUIPE"
+     Mesmo fundo bege da seção "As Sócias" (dá a sensação de que as duas
+     seções fazem parte do mesmo bloco "quem somos"), mas um grid menor,
+     de só 2 colunas, porque tem menos pessoas aqui.
+     ======= EDITÁVEL: ajustes visuais da seção ======= */
+  .secao-equipe {
+    background-color: var(--bege);
+    padding: 0 1.5rem 5rem;
+  }
+
+  .equipe-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 640px) {
+    .equipe-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  /* Placeholder de foto (usado enquanto não temos a foto real de alguém):
+     um ícone simples de pessoa, nas cores da marca, no lugar da imagem. */
+  .socia-foto-placeholder svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Botão "Falar com Dra. X" dentro de cada card */
+  .socia-whatsapp {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1.4rem;
+    padding: 0.6rem 1.2rem;
+    border: 1px solid var(--dourado);
+    border-radius: 30px;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--marrom);
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+
+  .socia-whatsapp svg {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+  }
+
+  .socia-whatsapp:hover,
+  .socia-whatsapp:focus-visible {
+    background-color: var(--dourado);
+    color: var(--off-white);
+  }
+
+  /* ==========================================================================
+     SEÇÃO "ÁREAS DE ATUAÇÃO"
+     "repeat(auto-fit, minmax(240px, 1fr))" é um truque do CSS Grid: ele
+     calcula sozinho quantas colunas cabem lado a lado (cada uma com no
+     mínimo 240px), sem precisarmos escrever uma media query pra cada
+     tamanho de tela.
+     ======= EDITÁVEL: ajustes visuais da seção ======= */
+  .secao-areas {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 5rem 1.5rem;
+  }
+
+  .areas-cabecalho {
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto 3rem;
+  }
+
+  .areas-cabecalho h2 {
+    font-size: 2.1rem;
+  }
+
+  .areas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.8rem;
+  }
+
+  .area-card {
+    border: 1px solid var(--bege);
+    border-radius: 6px;
+    padding: 2.1rem 1.7rem;
+    transition: border-color 0.25s ease, transform 0.25s ease;
+  }
+
+  .area-card:hover {
+    border-color: var(--dourado);
+    transform: translateY(-4px);
+  }
+
+  .area-icone {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background-color: var(--bege);
+    color: var(--marrom);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.4rem;
+  }
+
+  .area-icone svg {
+    width: 26px;
+    height: 26px;
+  }
+
+  .area-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.7rem;
+  }
+
+  .area-card p {
+    font-size: 0.9rem;
+    line-height: 1.75;
+  }
+
+  /* ==========================================================================
+     SEÇÃO "PERGUNTAS FREQUENTES"
+     <details> já vem com uma setinha padrão do navegador. As duas regras
+     abaixo escondem essa setinha (em navegadores diferentes) para
+     colocarmos nosso próprio "+" / "–" dourado no lugar.
+     ======= EDITÁVEL: ajustes visuais da seção ======= */
+  .secao-faq {
+    background-color: var(--bege);
+    padding: 5rem 1.5rem;
+  }
+
+  .faq-cabecalho {
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto 3rem;
+  }
+
+  .faq-cabecalho h2 {
+    font-size: 2.1rem;
+  }
+
+  .faq-lista {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .faq-item {
+    background-color: var(--off-white);
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    padding: 0 1.6rem;
+  }
+
+  .faq-item summary {
+    cursor: pointer;
+    list-style: none; /* esconde a setinha padrão (Firefox) */
+    padding: 1.3rem 2.2rem 1.3rem 0;
+    position: relative;
+    font-family: var(--fonte-titulo);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--marrom);
+  }
+
+  .faq-item summary::-webkit-details-marker {
+    display: none; /* esconde a setinha padrão (Chrome/Safari) */
+  }
+
+  .faq-item summary::after {
+    content: '+';
+    position: absolute;
+    right: 0.2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: var(--fonte-corpo);
+    font-size: 1.4rem;
+    color: var(--dourado);
+  }
+
+  .faq-item[open] summary::after {
+    content: '–';
+  }
+
+  .faq-item summary:focus-visible {
+    outline: 2px solid var(--dourado);
+    outline-offset: 4px;
+    border-radius: 4px;
+  }
+
+  .faq-item p {
+    padding-bottom: 1.5rem;
+    font-size: 0.93rem;
+    line-height: 1.8;
+  }
+
+  /* ==========================================================================
+     BOTÃO FLUTUANTE DE WHATSAPP
+     ======= EDITÁVEL: ajustes visuais do botão ======= */
+  .whatsapp-flutuante {
+    position: fixed;
+    right: 1.5rem;
+    bottom: 1.5rem;
+    width: 54px;
+    height: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--marrom-escuro);
+    color: var(--dourado-claro);
+    border-radius: 50%;
+    box-shadow: 0 8px 20px rgba(43, 33, 26, 0.35);
+    z-index: 900;
+    transition: background-color 0.25s ease, transform 0.25s ease;
+  }
+
+  .whatsapp-flutuante:hover,
+  .whatsapp-flutuante:focus-visible {
+    background-color: var(--dourado);
+    color: var(--marrom-escuro);
+    transform: translateY(-3px);
+  }
+
+  /* ==========================================================================
+     SEÇÃO "CONTATO"
+     ======= EDITÁVEL: ajustes visuais da seção ======= */
+  .secao-contato {
+    background-color: var(--off-white);
+    padding: 5rem 1.5rem;
+  }
+
+  .contato-cabecalho {
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto 3rem;
+  }
+
+  .contato-cabecalho h2 {
+    font-size: 2.1rem;
+  }
+
+  .contato-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .contato-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.8rem;
+  }
+
+  .contato-icone {
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background-color: var(--bege);
+    color: var(--marrom);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .contato-icone svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .contato-rotulo {
+    color: var(--dourado);
+    font-size: 0.72rem;
+    margin-bottom: 0.35rem;
+  }
+
+  /* Botões grandes o bastante pro dedo no celular (recomendação de acessibilidade
+     é pelo menos ~44px de altura de toque). */
+  .contato-botoes {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    margin-top: 1.5rem;
+  }
+
+  .botao-contato {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
+    padding: 1rem 1.4rem;
+    border-radius: 4px;
+    background-color: var(--marrom-escuro);
+    color: var(--off-white);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+    transition: background-color 0.25s ease;
+  }
+
+  .botao-contato:hover,
+  .botao-contato:focus-visible {
+    background-color: var(--dourado);
+    color: var(--marrom-escuro);
+  }
+
+  .contato-mapa {
+    min-height: 320px;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 16px 32px rgba(43, 33, 26, 0.15);
+  }
+
+  .contato-mapa iframe {
+    width: 100%;
+    height: 100%;
+    min-height: 320px;
+    display: block;
+  }
+
+  @media (min-width: 860px) {
+    .contato-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: stretch;
+    }
+
+    .contato-botoes {
+      flex-direction: row;
+    }
+  }
+
+  /* ==========================================================================
+     RODAPÉ
+     ======= EDITÁVEL: ajustes visuais do rodapé ======= */
+  .rodape {
+    background-color: var(--marrom-escuro);
+    color: var(--bege);
+    padding: 4rem 1.5rem 0;
+  }
+
+  .rodape-conteudo {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    padding-bottom: 3rem;
+  }
+
+  .rodape-logo {
+    width: 170px;
+    margin-bottom: 1.2rem;
+  }
+
+  .rodape-coluna p {
+    font-size: 0.88rem;
+    line-height: 1.8;
+    margin-bottom: 0.5rem;
+  }
+
+  .rodape-coluna a:hover,
+  .rodape-coluna a:focus-visible {
+    color: var(--dourado-claro);
+  }
+
+  .rodape-titulo {
+    color: var(--dourado);
+    margin-bottom: 1rem;
+  }
+
+  .rodape-base {
+    max-width: 1200px;
+    margin: 0 auto;
+    border-top: 1px solid rgba(217, 210, 197, 0.2);
+    /* O respiro extra embaixo (5.5rem) evita que o botão flutuante de
+       WhatsApp, que fica sempre fixo no canto, tampe esse texto quando
+       a página rolar até o fim — principalmente no celular. */
+    padding: 1.6rem 0 5.5rem;
+    text-align: center;
+  }
+
+  .rodape-base p {
+    font-size: 0.78rem;
+    line-height: 1.7;
+    color: rgba(217, 210, 197, 0.75);
+    margin-bottom: 0.5rem;
+  }
+
+  .rodape-aviso {
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 700px) {
+    .rodape-conteudo {
+      grid-template-columns: 1.3fr 1fr 1fr;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- ======= EDITÁVEL: MENU (cabeçalho fixo no topo) ======= -->
+<header id="cabecalho">
+  <div class="cabecalho-conteudo">
+
+    <a href="#inicio" class="logo-link" aria-label="Leal Souto & Carvalho Advocacia - voltar ao início">
+      <!-- ======= EDITÁVEL: LOGO (versão pequena, do menu) =======
+           Logo real da marca (recorte só do símbolo, sem o nome por baixo).
+           alt="" porque o link ao redor já tem aria-label explicando o que é
+           (evita o leitor de tela falar o nome do escritório duas vezes seguidas). -->
+      <img src="img/logo-icone-dourado.png" alt="" class="logo-img">
+    </a>
+
+    <nav id="nav-principal" aria-label="Menu principal">
+      <ul class="nav-lista">
+        <li><a href="#inicio">Início</a></li>
+        <li><a href="#escritorio">O Escritório</a></li>
+        <li><a href="#socias">Sócias</a></li>
+        <li><a href="#equipe">Nossa Equipe</a></li>
+        <li><a href="#areas">Áreas de Atuação</a></li>
+        <li><a href="#faq">Perguntas Frequentes</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+    </nav>
+
+    <!-- Botão do menu hambúrguer: só aparece no celular (ver CSS e JS mais abaixo) -->
+    <button id="botao-menu" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-principal">
+      <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true">
+        <line x1="3" y1="6" x2="21" y2="6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <line x1="3" y1="12" x2="21" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <line x1="3" y1="18" x2="21" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+
+  </div>
+</header>
+
+<main>
+
+  <!-- ======= EDITÁVEL: seção INÍCIO (capa) ======= -->
+  <section id="inicio" class="secao-capa">
+    <div class="capa-conteudo">
+
+      <!-- ======= EDITÁVEL: monograma grande da capa (mesmo logo do menu, em tamanho maior) =======
+           alt="" porque o <h1> logo abaixo já escreve o nome do escritório por extenso. -->
+      <img src="img/logo-icone-dourado.png" alt="" class="capa-logo-img">
+
+      <!-- ======= EDITÁVEL: nome do escritório (capa) ======= -->
+      <h1>Leal Souto &amp; Carvalho<br>Advocacia</h1>
+
+      <!-- ======= EDITÁVEL: frase-conceito da marca ======= -->
+      <p class="capa-frase">Por trás de cada sobrenome há uma história. Por trás de cada história, há uma especialista. E juntas, criamos soluções que fazem a diferença.</p>
+
+      <!-- ======= EDITÁVEL: botão de contato da capa (link direto do WhatsApp geral do escritório) ======= -->
+      <a href="https://wa.me/5538991509872" target="_blank" rel="noopener" class="botao-cta">Fale conosco</a>
+
+    </div>
+
+    <!-- Indicador discreto de "role para baixo" -->
+    <a href="#escritorio" class="indicador-rolagem" aria-label="Rolar para a próxima seção">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+        <line x1="12" y1="4" x2="12" y2="18" stroke="currentColor" stroke-width="1.5"/>
+        <polyline points="6,12 12,18 18,12" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      </svg>
+    </a>
+  </section>
+
+  <!-- ======= EDITÁVEL: seção O ESCRITÓRIO ======= -->
+  <section id="escritorio" class="secao-escritorio">
+    <div class="escritorio-grid">
+
+      <div class="escritorio-texto reveal">
+        <p class="caixa-alta destaque-dourado">Desde 2023</p>
+        <h2>O Escritório</h2>
+
+        <!-- ======= EDITÁVEL: texto institucional (história e missão) ======= -->
+        <p>Unimos nossas trajetórias com um propósito claro: oferecer uma defesa completa e humanizada para a vida do trabalhador e do segurado. Compreendemos que o Direito do Trabalho e o Direito Previdenciário caminham lado a lado na jornada de quem constrói o país. Muitas vezes, um problema na relação de trabalho repercute diretamente no direito a um benefício ou aposentadoria no INSS — e vice-versa. A união do escritório nasceu do desejo de somar experiências, estratégias e olhares especializados para garantir que nossos clientes tenham um atendimento personalizado, ético e integrativo, onde cada história é tratada com a relevância e o respeito que merece em todas as etapas da sua vida profissional e previdenciária.</p>
+
+        <p>Atuamos em todo o Brasil, de forma presencial e digital, com sede física em Montes Claros – MG.</p>
+
+        <!-- ======= EDITÁVEL: frase de fechamento oficial ======= -->
+        <p class="escritorio-fechamento">Juntas, unimos conhecimento, experiência e dedicação para proteger seus direitos e impulsionar seus objetivos. Conte com a Leal Souto e Carvalho para soluções jurídicas seguras e personalizadas.</p>
+      </div>
+
+      <div class="escritorio-imagem reveal">
+        <!-- ======= EDITÁVEL: foto das três sócias =======
+             Se um dia vocês tiverem uma foto de grupo mais nova, é só trocar o arquivo em img/socias.jpg
+             (mantendo o mesmo nome) ou trocar o caminho abaixo. -->
+        <img src="img/socias.jpg" alt="Dra. Camila Araújo Leal, Dra. Roberta Mariana Souto Mendes e Dra. Renata Rosa de Carvalho Nobre, sócias do escritório, sorrindo juntas">
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======= EDITÁVEL: seção AS SÓCIAS ======= -->
+  <section id="socias" class="secao-socias">
+
+    <div class="socias-cabecalho reveal">
+      <p class="caixa-alta destaque-dourado">Quem somos</p>
+      <h2>As Sócias</h2>
+    </div>
+
+    <div class="socias-grid">
+
+      <!-- ======= EDITÁVEL: card da Dra. Camila ======= -->
+      <div class="socia-card reveal">
+        <div class="socia-foto">
+          <!-- Para trocar a foto: substitua img/camila.jpg mantendo o mesmo nome de arquivo,
+               ou troque o caminho aqui embaixo. -->
+          <img src="img/camila.jpg" alt="Retrato de Dra. Camila Araújo Leal" loading="lazy">
+        </div>
+        <p class="socia-sobrenome caixa-alta">Leal</p>
+        <h3>Dra. Camila Araújo Leal</h3>
+        <p class="socia-oab">OAB/MG 215.768</p>
+        <p class="socia-frase">Respeito é a base de qualquer relação. À frente de Direito Empresarial, Direito Trabalhista e Direito Previdenciário, Dra. Camila garante compromisso e excelência em cada detalhe.</p>
+        <ul class="socia-areas">
+          <li>Direito Empresarial</li>
+          <li>Direito Trabalhista</li>
+          <li>Direito Previdenciário</li>
+        </ul>
+        <!-- ======= EDITÁVEL: WhatsApp direto da Dra. Camila (contato geral do escritório) ======= -->
+        <a href="https://wa.me/5538991509872" target="_blank" rel="noopener" class="socia-whatsapp">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+          Falar com Dra. Camila
+        </a>
+        <!-- ======= EDITÁVEL: minicurrículo (formação, pós-graduação) =======
+             Quando vocês tiverem esse texto, adicione um parágrafo aqui dentro do card, por exemplo:
+             <p class="socia-formacao">Graduada em Direito pela ... | Pós-graduada em ...</p> -->
+      </div>
+
+      <!-- ======= EDITÁVEL: card da Dra. Roberta ======= -->
+      <div class="socia-card reveal">
+        <div class="socia-foto">
+          <img src="img/roberta.jpg" alt="Retrato de Dra. Roberta Mariana Souto Mendes" loading="lazy">
+        </div>
+        <p class="socia-sobrenome caixa-alta">Souto</p>
+        <h3>Dra. Roberta Mariana Souto Mendes</h3>
+        <p class="socia-oab">OAB/MG 177.269</p>
+        <p class="socia-frase">Estratégia e inovação elevam qualquer negócio. Em Direito Trabalhista e Empresarial, Direito de Família e Sucessões, Dra. Roberta transforma desafios em crescimento.</p>
+        <ul class="socia-areas">
+          <li>Direito Trabalhista</li>
+          <li>Direito Empresarial</li>
+          <li>Direito de Família e Sucessões</li>
+        </ul>
+        <!-- ======= EDITÁVEL: WhatsApp direto da Dra. Roberta ======= -->
+        <a href="https://wa.me/5538998470265" target="_blank" rel="noopener" class="socia-whatsapp">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+          Falar com Dra. Roberta
+        </a>
+        <!-- ======= EDITÁVEL: minicurrículo (formação, pós-graduação) ======= -->
+      </div>
+
+      <!-- ======= EDITÁVEL: card da Dra. Renata ======= -->
+      <div class="socia-card reveal">
+        <div class="socia-foto">
+          <img src="img/renata.jpg" alt="Retrato de Dra. Renata Rosa de Carvalho Nobre" loading="lazy">
+        </div>
+        <p class="socia-sobrenome caixa-alta">Carvalho</p>
+        <h3>Dra. Renata Rosa de Carvalho Nobre</h3>
+        <p class="socia-oab">OAB/MG 163.487</p>
+        <p class="socia-frase">Raízes fortes e crescimento sólido. A atuação da Dra. Renata em Previdenciário, Trabalhista e Indenizações é marcada por planejamento e execução certeira.</p>
+        <ul class="socia-areas">
+          <li>Direito Previdenciário</li>
+          <li>Direito Trabalhista</li>
+          <li>Indenizações</li>
+        </ul>
+        <!-- ======= EDITÁVEL: WhatsApp direto da Dra. Renata ======= -->
+        <a href="https://wa.me/5538998019266" target="_blank" rel="noopener" class="socia-whatsapp">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+          Falar com Dra. Renata
+        </a>
+        <!-- ======= EDITÁVEL: minicurrículo (formação, pós-graduação) ======= -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======= EDITÁVEL: seção NOSSA EQUIPE (advogados(as) associados(as), não sócios) =======
+       Reaproveita o mesmo estilo de card das sócias (.socia-card, .socia-foto etc.),
+       só que num grid menor (2 colunas), sem o "sobrenome de marca" e sem frase-conceito
+       (esse conceito é só das três sócias, pelo nome do escritório).
+       ATENÇÃO: os campos com [PREENCHER OAB/MG] precisam ser substituídos pelo número real
+       assim que vocês tiverem — procure por essa marca pra encontrar rapidinho. -->
+  <section id="equipe" class="secao-equipe">
+
+    <div class="socias-cabecalho reveal">
+      <p class="caixa-alta destaque-dourado">Time</p>
+      <h2>Nossa Equipe</h2>
+    </div>
+
+    <div class="equipe-grid">
+
+      <!-- ======= EDITÁVEL: card do Ramon Librelon ======= -->
+      <div class="socia-card reveal">
+        <div class="socia-foto">
+          <img src="img/ramon2.jpeg" alt="Retrato de Dr. Ramon Librelon" loading="lazy">
+        </div>
+        <p class="socia-sobrenome caixa-alta">Advogado Associado</p>
+        <h3>Dr. Ramon Librelon</h3>
+        <!-- ======= PREENCHER: número da OAB/MG do Ramon ======= -->
+        <p class="socia-oab">[PREENCHER OAB/MG]</p>
+      </div>
+
+      <!-- ======= EDITÁVEL: card da Josyane ======= -->
+      <div class="socia-card reveal">
+        <div class="socia-foto socia-foto-placeholder">
+          <!-- ======= EDITÁVEL: foto da Josyane =======
+               Quando tiver a foto, apague o <svg> abaixo e troque por:
+               <img src="img/josyane.jpg" alt="Retrato de Josyane [SOBRENOME]" loading="lazy"> -->
+          <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <rect width="100" height="100" fill="var(--bege)"></rect>
+            <circle cx="50" cy="38" r="16" fill="var(--marrom)" opacity="0.35"></circle>
+            <path d="M20 92c0-20 13-32 30-32s30 12 30 32" fill="var(--marrom)" opacity="0.35"></path>
+          </svg>
+        </div>
+        <p class="socia-sobrenome caixa-alta">Advogada Associada</p>
+        <!-- ======= PREENCHER: sobrenome completo da Josyane ======= -->
+        <h3>Josyane [PREENCHER SOBRENOME]</h3>
+        <!-- ======= PREENCHER: número da OAB/MG da Josyane ======= -->
+        <p class="socia-oab">[PREENCHER OAB/MG]</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======= EDITÁVEL: seção ÁREAS DE ATUAÇÃO =======
+       Os textos abaixo são informativos (o que a área abrange), sem prometer resultado —
+       assim seguimos o Código de Ética da OAB. Se quiser ajustar alguma descrição, pode
+       editar o texto dentro de cada <p>, sem se preocupar com o <svg> do ícone. -->
+  <section id="areas" class="secao-areas">
+
+    <div class="areas-cabecalho reveal">
+      <p class="caixa-alta destaque-dourado">Como podemos ajudar</p>
+      <h2>Áreas de Atuação</h2>
+    </div>
+
+    <div class="areas-grid">
+
+      <div class="area-card reveal">
+        <div class="area-icone" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="7" width="18" height="12" rx="2"></rect>
+            <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+          </svg>
+        </div>
+        <h3>Direito Trabalhista</h3>
+        <p>Cuida da relação entre empregado e empregador: direitos trabalhistas, rescisões, verbas, jornada e demais questões ligadas ao contrato de trabalho.</p>
+      </div>
+
+      <div class="area-card reveal">
+        <div class="area-icone" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="5" y="3" width="14" height="18" rx="1"></rect>
+            <rect x="8" y="6.5" width="2" height="2"></rect>
+            <rect x="14" y="6.5" width="2" height="2"></rect>
+            <rect x="8" y="11" width="2" height="2"></rect>
+            <rect x="14" y="11" width="2" height="2"></rect>
+            <rect x="10" y="16" width="4" height="5"></rect>
+          </svg>
+        </div>
+        <h3>Direito Empresarial</h3>
+        <p>Abrange a estruturação jurídica de empresas, contratos comerciais, questões societárias e o suporte legal para a rotina de um negócio.</p>
+      </div>
+
+      <div class="area-card reveal">
+        <div class="area-icone" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3z"></path>
+          </svg>
+        </div>
+        <h3>Direito Previdenciário</h3>
+        <p>Trata dos benefícios do INSS — aposentadorias, auxílios e pensões — incluindo o planejamento previdenciário e a análise do tempo de contribuição.</p>
+      </div>
+
+      <div class="area-card reveal">
+        <div class="area-icone" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 11 12 4l8 7"></path>
+            <path d="M6 10v10h12V10"></path>
+            <rect x="10" y="14" width="4" height="6"></rect>
+          </svg>
+        </div>
+        <h3>Direito de Família e Sucessões</h3>
+        <p>Envolve relações familiares — casamento, união estável, guarda, divórcio — e processos de inventário, partilha de bens e planejamento sucessório.</p>
+      </div>
+
+      <div class="area-card reveal">
+        <div class="area-icone" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M7 3h8l4 4v14H7z"></path>
+            <path d="M15 3v4h4"></path>
+            <line x1="9" y1="12" x2="15" y2="12"></line>
+            <line x1="9" y1="16" x2="15" y2="16"></line>
+          </svg>
+        </div>
+        <h3>Indenizações</h3>
+        <p>Trata de situações em que um dano — material, moral ou decorrente de acidente — pode gerar direito à reparação, dentro dos limites previstos em lei.</p>
+      </div>
+
+      <div class="area-card reveal">
+        <div class="area-icone" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9"></circle>
+            <polygon points="14.5,9.5 10.5,10.5 9.5,14.5 13.5,13.5"></polygon>
+          </svg>
+        </div>
+        <h3>Assessoria Jurídica</h3>
+        <p>Além da atuação em processos, oferecemos suporte jurídico preventivo e consultivo — orientação sobre contratos, documentos e decisões do dia a dia, pessoais ou empresariais.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======= EDITÁVEL: seção PERGUNTAS FREQUENTES =======
+       Cada pergunta usa a tag <details>, que já abre/fecha sozinha ao clicar
+       (o navegador cuida disso, sem precisar de JavaScript). O texto dentro do
+       <summary> é a pergunta (sempre visível); o <p> logo depois é a resposta
+       (some/aparece). Pra adicionar uma pergunta nova, copie um bloco <details>
+       inteiro e cole antes do </div> final. Este conteúdo já foi revisado e
+       aprovado por você em 2026-07-25. -->
+  <section id="faq" class="secao-faq">
+
+    <div class="faq-cabecalho reveal">
+      <p class="caixa-alta destaque-dourado">Dúvidas comuns</p>
+      <h2>Perguntas Frequentes</h2>
+    </div>
+
+    <div class="faq-lista reveal">
+
+      <details class="faq-item">
+        <summary>Em quais áreas o escritório atua?</summary>
+        <p>Atuamos principalmente em Direito Trabalhista, Direito Empresarial, Direito Previdenciário, Direito de Família e Sucessões e Indenizações, além de assessoria jurídica preventiva.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>O que é Direito Previdenciário e quando procurar um advogado da área?</summary>
+        <p>É o ramo do Direito que trata dos benefícios do INSS, como aposentadorias, auxílios e pensões. Vale buscar orientação sempre que houver dúvida sobre tempo de contribuição, negativa de benefício ou planejamento para a aposentadoria.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Quais documentos costumam ser necessários para uma primeira consulta trabalhista?</summary>
+        <p>Em geral, carteira de trabalho (física ou digital), contracheques, eventual carta de demissão ou comunicados da empresa, e qualquer documento relacionado ao contrato de trabalho. A lista exata depende do caso.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Como funciona um processo de inventário?</summary>
+        <p>O inventário organiza a partilha dos bens de uma pessoa falecida entre os herdeiros. Pode ser feito em cartório (extrajudicial) quando há consenso entre as partes, ou judicialmente quando há conflito ou outras particularidades.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>O escritório atende em todo o Brasil?</summary>
+        <p>Sim. Além do atendimento presencial em Montes Claros – MG, atendemos clientes de outras localidades de forma digital.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Como funciona o primeiro atendimento?</summary>
+        <p>O primeiro contato pode ser feito pelo WhatsApp ou e-mail. A partir dele, entendemos o caso e explicamos os próximos passos.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>O que considerar antes de buscar uma indenização por danos morais ou materiais?</summary>
+        <p>É importante reunir provas do ocorrido (documentos, boletins, laudos, mensagens, testemunhas) e observar o prazo legal para buscar a reparação, que varia conforme o tipo de caso.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Direito de Família cuida apenas de divórcio?</summary>
+        <p>Não. Além de divórcio e guarda, a área também trata de união estável, pensão alimentícia, reconhecimento de paternidade e planejamento sucessório, entre outros temas.</p>
+      </details>
+
+    </div>
+  </section>
+
+  <!-- ======= EDITÁVEL: seção CONTATO ======= -->
+  <section id="contato" class="secao-contato">
+
+    <div class="contato-cabecalho reveal">
+      <p class="caixa-alta destaque-dourado">Fale com a gente</p>
+      <h2>Contato</h2>
+    </div>
+
+    <div class="contato-grid">
+
+      <div class="contato-info reveal">
+
+        <div class="contato-item">
+          <div class="contato-icone" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-7.5 7-12a7 7 0 0 0-14 0c0 4.5 7 12 7 12z"></path><circle cx="12" cy="9" r="2.5"></circle></svg>
+          </div>
+          <div>
+            <p class="contato-rotulo caixa-alta">Endereço</p>
+            <!-- ======= EDITÁVEL: endereço ======= -->
+            <p>Praça Honorato Alves, nº 171, Sala 302<br>Edifício Cândido Canela, Centro<br>Montes Claros – MG, CEP 39400-103</p>
+          </div>
+        </div>
+
+        <div class="contato-item">
+          <div class="contato-icone" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3.5 2"></path></svg>
+          </div>
+          <div>
+            <p class="contato-rotulo caixa-alta">Horário de atendimento</p>
+            <!-- ======= EDITÁVEL: horário ======= -->
+            <p>Segunda a sexta, 8h às 18h</p>
+          </div>
+        </div>
+
+        <!-- ======= EDITÁVEL: botões de contato (WhatsApp geral, e-mail, Instagram) ======= -->
+        <div class="contato-botoes">
+          <a href="https://wa.me/5538991509872" target="_blank" rel="noopener" class="botao-contato">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            WhatsApp
+          </a>
+          <a href="mailto:lealsoutoecarvalho.adv@gmail.com" class="botao-contato">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg>
+            E-mail
+          </a>
+          <a href="https://www.instagram.com/lealsoutoecarvalhoadvocacia/" target="_blank" rel="noopener" class="botao-contato">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17" cy="7" r="0.6" fill="currentColor"></circle></svg>
+            Instagram
+          </a>
+        </div>
+
+      </div>
+
+      <!-- ======= EDITÁVEL: mapa do Google Maps =======
+           Esse endereço já está preenchido a partir do endereço oficial. Se um dia o
+           escritório mudar de endereço, é só trocar o texto depois de "q=" no link abaixo. -->
+      <div class="contato-mapa reveal">
+        <iframe
+          src="https://www.google.com/maps?q=Pra%C3%A7a+Honorato+Alves%2C+171%2C+Centro%2C+Montes+Claros+-+MG%2C+39400-103&output=embed"
+          width="100%"
+          height="100%"
+          style="border:0"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Localização do escritório Leal Souto & Carvalho Advocacia">
+        </iframe>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- ======= EDITÁVEL: RODAPÉ ======= -->
+<footer class="rodape">
+  <div class="rodape-conteudo">
+
+    <div class="rodape-coluna rodape-marca reveal">
+      <!-- ======= EDITÁVEL: logo do rodapé (versão completa, com o nome escrito) ======= -->
+      <img src="img/logo-dourado-completo.png" alt="Leal Souto & Carvalho Advocacia" class="rodape-logo">
+      <p>Praça Honorato Alves, nº 171, Sala 302<br>Edifício Cândido Canela, Centro<br>Montes Claros – MG, CEP 39400-103</p>
+    </div>
+
+    <div class="rodape-coluna reveal">
+      <p class="caixa-alta rodape-titulo">Contato</p>
+      <!-- ======= EDITÁVEL: contatos do rodapé ======= -->
+      <p><a href="mailto:lealsoutoecarvalho.adv@gmail.com">lealsoutoecarvalho.adv@gmail.com</a></p>
+      <p><a href="https://wa.me/5538991509872" target="_blank" rel="noopener">(38) 9 9150-9872</a></p>
+      <p><a href="https://www.instagram.com/lealsoutoecarvalhoadvocacia/" target="_blank" rel="noopener">@lealsoutoecarvalhoadvocacia</a></p>
+    </div>
+
+    <div class="rodape-coluna reveal">
+      <p class="caixa-alta rodape-titulo">Sócias</p>
+      <!-- ======= EDITÁVEL: nomes e OABs das sócias no rodapé ======= -->
+      <p>Dra. Camila Araújo Leal — OAB/MG 215.768</p>
+      <p>Dra. Roberta Mariana Souto Mendes — OAB/MG 177.269</p>
+      <p>Dra. Renata Rosa de Carvalho Nobre — OAB/MG 163.487</p>
+    </div>
+
+  </div>
+
+  <div class="rodape-base">
+    <!-- O <span id="ano-atual"> é preenchido sozinho pelo JavaScript lá embaixo,
+         com o ano de hoje — assim vocês nunca precisam lembrar de atualizar isso à mão. -->
+    <p>© <span id="ano-atual"></span> Leal Souto & Carvalho Advocacia. Todos os direitos reservados.</p>
+    <!-- ======= EDITÁVEL: aviso obrigatório da OAB (não remover) ======= -->
+    <p class="rodape-aviso">As informações deste site têm caráter meramente informativo, nos termos do Código de Ética e Disciplina da OAB.</p>
+  </div>
+</footer>
+
+<!-- ======= EDITÁVEL: botão flutuante do WhatsApp =======
+     Fica sempre visível no canto da tela, mesmo rolando a página, porque também usa
+     "position: fixed" (o mesmo truque do cabeçalho). Usa o WhatsApp geral (Dra. Camila). -->
+<a href="https://wa.me/5538991509872" target="_blank" rel="noopener" class="whatsapp-flutuante" aria-label="Fale conosco pelo WhatsApp">
+  <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+</a>
+
+<script>
+  // O JavaScript (o "comportamento" do site: menu hambúrguer, accordion do FAQ etc.)
+  // vai entrar aqui dentro conforme formos construindo cada seção.
+
+  // ======= MENU HAMBÚRGUER (celular) =======
+  // "getElementById" pega o elemento HTML pelo id definido lá em cima.
+  const botaoMenu = document.getElementById('botao-menu');
+  // É a lista <ul class="nav-lista"> que desliza na tela (é nela que o CSS
+  // procura a classe "aberto"), não a tag <nav> que a envolve.
+  const navLista = document.querySelector('.nav-lista');
+
+  botaoMenu.addEventListener('click', () => {
+    // "toggle" liga se estava desligado, e desliga se estava ligado.
+    // Ele também devolve true/false, que usamos para atualizar o aria-expanded
+    // (isso avisa leitores de tela se o menu está aberto ou fechado).
+    const aberto = navLista.classList.toggle('aberto');
+    botaoMenu.setAttribute('aria-expanded', aberto);
+    botaoMenu.setAttribute('aria-label', aberto ? 'Fechar menu' : 'Abrir menu');
+  });
+
+  // Fecha o menu do celular automaticamente ao clicar em algum link dele
+  document.querySelectorAll('.nav-lista a').forEach((link) => {
+    link.addEventListener('click', () => {
+      navLista.classList.remove('aberto');
+      botaoMenu.setAttribute('aria-expanded', 'false');
+      botaoMenu.setAttribute('aria-label', 'Abrir menu');
+    });
+  });
+
+  // ======= CABEÇALHO FICA OPACO AO ROLAR =======
+  const cabecalho = document.getElementById('cabecalho');
+  window.addEventListener('scroll', () => {
+    cabecalho.classList.toggle('rolado', window.scrollY > 40);
+  });
+
+  // ======= ANIMAÇÃO DE FADE-IN AO ROLAR =======
+  // O IntersectionObserver "vigia" os elementos com classe .reveal e avisa
+  // assim que cada um entra na tela, para adicionarmos a classe .visivel.
+  const observadorDeRolagem = new IntersectionObserver(
+    (elementosObservados) => {
+      elementosObservados.forEach((item) => {
+        if (item.isIntersecting) {
+          item.target.classList.add('visivel');
+          observadorDeRolagem.unobserve(item.target); // já apareceu, não precisa mais vigiar
+        }
+      });
+    },
+    { threshold: 0.15 }
+  );
+
+  document.querySelectorAll('.reveal').forEach((elemento) => {
+    observadorDeRolagem.observe(elemento);
+  });
+
+  // ======= ANO ATUAL NO RODAPÉ =======
+  // "new Date()" pega a data de hoje no computador de quem está vendo o site,
+  // e ".getFullYear()" pega só o ano (ex: 2026). Assim o rodapé nunca fica desatualizado.
+  document.getElementById('ano-atual').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
