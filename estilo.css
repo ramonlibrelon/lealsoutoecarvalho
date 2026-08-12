@@ -1,0 +1,1070 @@
+/* ==========================================================================
+   ESTILO.CSS — visual compartilhado por TODAS as páginas do site
+   (index.html e as páginas de cada área de atuação).
+   Se você mudar uma cor ou espaçamento aqui, o site inteiro atualiza
+   sozinho — não precisa editar página por página.
+   ========================================================================== */
+
+/* ==========================================================================
+   PALETA DE CORES DA MARCA
+   "--nome" é uma variável CSS: um apelido para uma cor, que a gente define
+   uma vez aqui e reaproveita no resto do arquivo (ex.: var(--dourado)).
+   Se quiser mudar um tom no futuro, troca só aqui embaixo e o site inteiro
+   é atualizado sozinho.
+   ======= EDITÁVEL: cores da marca ======= */
+:root {
+  --marrom-escuro: #3E2A1E; /* fundo de blocos, rodapé */
+  --marrom:        #5A4032; /* textos de destaque, títulos */
+  --dourado:       #C9A227; /* detalhes, linhas, hover */
+  --dourado-claro: #E0C877; /* realces sobre fundo escuro */
+  --bege:          #D9D2C5; /* fundos alternados */
+  --off-white:     #F7F4EF; /* fundo principal */
+  --texto:         #2B211A;
+
+  /* Fontes: título (serifada) e corpo (sans-serif) */
+  --fonte-titulo: 'Cormorant Garamond', serif;
+  --fonte-corpo: 'Inter', sans-serif;
+}
+
+/* Reset básico: navegadores aplicam margens/paddings diferentes por padrão
+   para cada elemento. Isso zera tudo para começarmos do mesmo ponto. */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth; /* faz os links do menu rolarem suavemente até a seção */
+}
+
+body {
+  font-family: var(--fonte-corpo);
+  color: var(--texto);
+  background-color: var(--off-white);
+  line-height: 1.6;
+}
+
+h1, h2, h3 {
+  font-family: var(--fonte-titulo);
+  font-weight: 600;
+  color: var(--marrom);
+  letter-spacing: 0.03em;
+}
+
+/* Textos de apoio em caixa alta com espaçamento generoso entre letras,
+   como pedido para combinar com a estética do logotipo. */
+.caixa-alta {
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.85rem;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* Acessibilidade: quando alguém navega pelo teclado (tecla Tab), o item
+   em foco precisa de um contorno visível — nunca remova isso. */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--dourado);
+  outline-offset: 3px;
+}
+
+/* ==========================================================================
+   MENU (cabeçalho fixo)
+   "position: fixed" faz o menu grudar no topo da tela e ficar ali mesmo
+   quando a página rola. Começa transparente (para combinar com a capa
+   escura) e vira sólido quando o JavaScript detecta que a página rolou
+   (classe .rolado, adicionada no script.js).
+   ======= EDITÁVEL: ajustes visuais do menu ======= */
+#cabecalho {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: transparent;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#cabecalho.rolado {
+  background-color: var(--marrom-escuro);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Páginas internas (como as páginas de cada área) não têm a capa escura da home
+   por trás do cabeçalho — por isso ele fica sempre sólido nelas, em vez de
+   começar transparente. Isso é ligado colocando class="pagina-interna" no <body>. */
+body.pagina-interna #cabecalho {
+  background-color: var(--marrom-escuro);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+}
+
+.cabecalho-conteudo {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 1.5rem;
+}
+
+.logo-link {
+  color: var(--dourado-claro);
+  line-height: 0; /* evita espaço extra embaixo do SVG */
+}
+
+.logo-img {
+  width: 46px;
+  height: auto;
+}
+
+.nav-lista {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+}
+
+.nav-lista a {
+  display: inline-block;
+  white-space: nowrap;
+  color: var(--off-white);
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  padding: 0.3rem 0;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.nav-lista a:hover,
+.nav-lista a:focus-visible {
+  border-color: var(--dourado);
+  color: var(--dourado-claro);
+}
+
+/* O botão hambúrguer fica escondido no desktop por padrão */
+#botao-menu {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--off-white);
+  cursor: pointer;
+  padding: 0.3rem;
+}
+
+/* ======= Celular / telas médias: menu vira hambúrguer =======
+   O menu tem 7 itens, então precisamos de uma tela mais larga (1100px)
+   pra caber tudo numa linha só sem quebrar — por isso esse número é maior
+   que os 860px usados como "corte" nas outras seções do site. */
+@media (max-width: 1100px) {
+  #botao-menu {
+    display: block;
+    z-index: 1001;
+  }
+
+  .nav-lista {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: min(75vw, 320px);
+    flex-direction: column;
+    justify-content: center;
+    gap: 2.2rem;
+    background-color: var(--marrom-escuro);
+    padding: 2rem;
+    transform: translateX(100%);
+    transition: transform 0.35s ease;
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.25);
+  }
+
+  /* Classe adicionada pelo JavaScript quando o botão é clicado */
+  .nav-lista.aberto {
+    transform: translateX(0);
+  }
+
+  .nav-lista a {
+    font-size: 0.95rem;
+  }
+}
+
+/* ==========================================================================
+   CAPA (seção "Início")
+   100vh = 100% da altura da tela do visitante, ou seja, a capa preenche
+   a tela toda ao abrir o site, antes de rolar.
+   ======= EDITÁVEL: ajustes visuais da capa ======= */
+.secao-capa {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: var(--marrom-escuro);
+  color: var(--off-white);
+  padding: 7rem 1.5rem 4rem;
+  position: relative;
+}
+
+.capa-conteudo {
+  max-width: 640px;
+}
+
+.capa-logo-img {
+  width: 140px;
+  margin: 0 auto 2rem;
+}
+
+.secao-capa h1 {
+  color: var(--off-white);
+  font-size: 2rem;
+  line-height: 1.3;
+  margin-bottom: 1.5rem;
+}
+
+.capa-frase {
+  font-size: 1rem;
+  color: var(--bege);
+  line-height: 1.9;
+  margin-bottom: 2.5rem;
+}
+
+.botao-cta {
+  display: inline-block;
+  background-color: var(--dourado);
+  color: var(--marrom-escuro);
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  padding: 0.95rem 2.4rem;
+  border-radius: 2px;
+  transition: background-color 0.25s ease, transform 0.25s ease;
+}
+
+.botao-cta:hover,
+.botao-cta:focus-visible {
+  background-color: var(--dourado-claro);
+  transform: translateY(-2px);
+}
+
+.indicador-rolagem {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--dourado);
+  animation: flutuar 2s ease-in-out infinite;
+}
+
+@keyframes flutuar {
+  0%, 100% { transform: translate(-50%, 0); }
+  50%      { transform: translate(-50%, 8px); }
+}
+
+/* A partir de telas maiores (tablet/desktop), aumenta o título da capa */
+@media (min-width: 700px) {
+  .secao-capa h1 {
+    font-size: 3.1rem;
+  }
+  .capa-frase {
+    font-size: 1.1rem;
+  }
+}
+
+/* ==========================================================================
+   ANIMAÇÃO DE "FADE-IN" AO ROLAR A PÁGINA
+   Qualquer elemento com a classe "reveal" começa invisível e levemente
+   deslocado para baixo. Quando ele aparece na tela (o JavaScript detecta
+   isso), ganha a classe "visivel" e some suavemente para o lugar certo. */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.reveal.visivel {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   SEÇÃO "O ESCRITÓRIO"
+   "grid" é outro jeito de organizar elementos lado a lado (como o flex do
+   menu, mas melhor pra layouts em colunas). No celular fica 1 coluna só
+   (texto em cima, foto embaixo); a partir de 860px vira 2 colunas.
+   ======= EDITÁVEL: ajustes visuais da seção ======= */
+.secao-escritorio {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 5rem 1.5rem;
+}
+
+.escritorio-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.destaque-dourado {
+  color: var(--dourado);
+  margin-bottom: 0.8rem;
+}
+
+.secao-escritorio h2 {
+  font-size: 2.1rem;
+  margin-bottom: 1.5rem;
+}
+
+.escritorio-texto p {
+  margin-bottom: 1.2rem;
+  text-align: justify;
+}
+
+.escritorio-fechamento {
+  font-style: italic;
+  color: var(--marrom);
+  border-left: 2px solid var(--dourado);
+  padding-left: 1.2rem;
+}
+
+.escritorio-imagem img {
+  border-radius: 6px;
+  box-shadow: 0 20px 40px rgba(43, 33, 26, 0.2);
+}
+
+@media (min-width: 860px) {
+  .escritorio-grid {
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 4.5rem;
+  }
+}
+
+/* ==========================================================================
+   SEÇÃO "AS SÓCIAS"
+   Fundo bege para alternar com o off-white das seções vizinhas, como
+   pedido na identidade visual (fundos alternados dão ritmo à página).
+   ======= EDITÁVEL: ajustes visuais da seção ======= */
+.secao-socias {
+  background-color: var(--bege);
+  padding: 5rem 1.5rem;
+}
+
+.socias-cabecalho {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 3rem;
+}
+
+.socias-cabecalho h2 {
+  font-size: 2.1rem;
+}
+
+.socias-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.socia-card {
+  background-color: var(--off-white);
+  border-radius: 6px;
+  padding: 2rem 1.7rem 2.3rem;
+  text-align: center;
+  box-shadow: 0 16px 32px rgba(43, 33, 26, 0.12);
+}
+
+/* aspect-ratio força a proporção 3:4 (retrato) mesmo antes da imagem carregar,
+   evitando que o layout "pule" quando a foto aparece. */
+.socia-foto {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: 4px;
+  margin-bottom: 1.6rem;
+}
+
+.socia-foto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.socia-sobrenome {
+  color: var(--dourado);
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+
+.socia-card h3 {
+  font-size: 1.35rem;
+  margin-bottom: 0.3rem;
+}
+
+.socia-oab {
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  color: var(--marrom);
+  margin-bottom: 1.2rem;
+}
+
+.socia-frase {
+  font-size: 0.93rem;
+  line-height: 1.75;
+  margin-bottom: 1.4rem;
+}
+
+.socia-areas {
+  list-style: none;
+  text-align: left;
+  border-top: 1px solid var(--bege);
+  padding-top: 1.1rem;
+}
+
+.socia-areas li {
+  position: relative;
+  font-size: 0.85rem;
+  padding-left: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Um pontinho dourado no lugar de marcador de lista padrão */
+.socia-areas li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: var(--dourado);
+}
+
+@media (min-width: 860px) {
+  .socias-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+}
+
+/* ==========================================================================
+   SEÇÃO "NOSSA EQUIPE"
+   Mesmo fundo bege da seção "As Sócias" (dá a sensação de que as duas
+   seções fazem parte do mesmo bloco "quem somos"), mas um grid menor,
+   de só 2 colunas, porque tem menos pessoas aqui.
+   ======= EDITÁVEL: ajustes visuais da seção ======= */
+.secao-equipe {
+  background-color: var(--bege);
+  padding: 0 1.5rem 5rem;
+}
+
+.equipe-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+@media (min-width: 640px) {
+  .equipe-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Botão "Falar com Dra. X" dentro de cada card */
+.socia-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.4rem;
+  padding: 0.6rem 1.2rem;
+  border: 1px solid var(--dourado);
+  border-radius: 30px;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--marrom);
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.socia-whatsapp svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+
+.socia-whatsapp:hover,
+.socia-whatsapp:focus-visible {
+  background-color: var(--dourado);
+  color: var(--off-white);
+}
+
+/* ==========================================================================
+   SEÇÃO "ÁREAS DE ATUAÇÃO"
+   "repeat(auto-fit, minmax(240px, 1fr))" é um truque do CSS Grid: ele
+   calcula sozinho quantas colunas cabem lado a lado (cada uma com no
+   mínimo 240px), sem precisarmos escrever uma media query pra cada
+   tamanho de tela.
+   ======= EDITÁVEL: ajustes visuais da seção ======= */
+.secao-areas {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 5rem 1.5rem;
+}
+
+.areas-cabecalho {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 3rem;
+}
+
+.areas-cabecalho h2 {
+  font-size: 2.1rem;
+}
+
+.areas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.8rem;
+}
+
+.area-card {
+  border: 1px solid var(--bege);
+  border-radius: 6px;
+  padding: 2.1rem 1.7rem;
+  transition: border-color 0.25s ease, transform 0.25s ease;
+}
+
+.area-card:hover {
+  border-color: var(--dourado);
+  transform: translateY(-4px);
+}
+
+/* O card inteiro é clicável quando envolvido por um <a> (ver página de cada área) */
+a.area-card {
+  display: block;
+  color: inherit;
+}
+
+.area-icone {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background-color: var(--bege);
+  color: var(--marrom);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.4rem;
+}
+
+.area-icone svg {
+  width: 26px;
+  height: 26px;
+}
+
+.area-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.7rem;
+}
+
+.area-card p {
+  font-size: 0.9rem;
+  line-height: 1.75;
+}
+
+/* Link "Saiba mais" dentro do card, quando a área tem página própria */
+.area-saiba-mais {
+  display: inline-block;
+  margin-top: 1rem;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--dourado);
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   SEÇÃO "PERGUNTAS FREQUENTES"
+   <details> já vem com uma setinha padrão do navegador. As duas regras
+   abaixo escondem essa setinha (em navegadores diferentes) para
+   colocarmos nosso próprio "+" / "–" dourado no lugar.
+   ======= EDITÁVEL: ajustes visuais da seção ======= */
+.secao-faq {
+  background-color: var(--bege);
+  padding: 5rem 1.5rem;
+}
+
+.faq-cabecalho {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 3rem;
+}
+
+.faq-cabecalho h2 {
+  font-size: 2.1rem;
+}
+
+.faq-lista {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.faq-item {
+  background-color: var(--off-white);
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  padding: 0 1.6rem;
+}
+
+.faq-item summary {
+  cursor: pointer;
+  list-style: none; /* esconde a setinha padrão (Firefox) */
+  padding: 1.3rem 2.2rem 1.3rem 0;
+  position: relative;
+  font-family: var(--fonte-titulo);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--marrom);
+}
+
+.faq-item summary::-webkit-details-marker {
+  display: none; /* esconde a setinha padrão (Chrome/Safari) */
+}
+
+.faq-item summary::after {
+  content: '+';
+  position: absolute;
+  right: 0.2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--fonte-corpo);
+  font-size: 1.4rem;
+  color: var(--dourado);
+}
+
+.faq-item[open] summary::after {
+  content: '–';
+}
+
+.faq-item summary:focus-visible {
+  outline: 2px solid var(--dourado);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.faq-item p {
+  padding-bottom: 1.5rem;
+  font-size: 0.93rem;
+  line-height: 1.8;
+}
+
+/* ==========================================================================
+   ACCORDION "FRENTES DE ATUAÇÃO" (páginas de área)
+   Parecido com o accordion do FAQ, mas com estilo PRÓPRIO — de propósito
+   separado do .faq-item, pra não afetar a seção de Perguntas Frequentes
+   se um dia você quiser ajustar só um dos dois.
+   Título em fonte normal (igual ao resto do texto da página) e número
+   dentro de um círculo, reaproveitando o mesmo visual dos ícones redondos
+   que já aparecem nesta página. */
+.topicos-lista {
+  margin: 0 0 2.5rem;
+}
+
+.topico-item {
+  background-color: var(--off-white);
+  border: 1px solid var(--bege);
+  border-radius: 6px;
+  margin-bottom: 0.9rem;
+  padding: 0 1.5rem;
+}
+
+.topico-item summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.1rem 2.2rem 1.1rem 0;
+  position: relative;
+  font-family: var(--fonte-corpo);
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: var(--marrom);
+}
+
+.topico-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.topico-item summary::after {
+  content: '+';
+  position: absolute;
+  right: 0.2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.4rem;
+  color: var(--dourado);
+}
+
+.topico-item[open] summary::after {
+  content: '–';
+}
+
+.topico-item summary:focus-visible {
+  outline: 2px solid var(--dourado);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.topico-item p {
+  padding-bottom: 1.4rem;
+  font-size: 0.92rem;
+  line-height: 1.8;
+}
+
+.topico-numero {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: var(--bege);
+  color: var(--marrom);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   BOTÃO FLUTUANTE DE WHATSAPP
+   ======= EDITÁVEL: ajustes visuais do botão ======= */
+.whatsapp-flutuante {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  width: 54px;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--marrom-escuro);
+  color: var(--dourado-claro);
+  border-radius: 50%;
+  box-shadow: 0 8px 20px rgba(43, 33, 26, 0.35);
+  z-index: 900;
+  transition: background-color 0.25s ease, transform 0.25s ease;
+}
+
+.whatsapp-flutuante:hover,
+.whatsapp-flutuante:focus-visible {
+  background-color: var(--dourado);
+  color: var(--marrom-escuro);
+  transform: translateY(-3px);
+}
+
+/* ==========================================================================
+   SEÇÃO "CONTATO"
+   ======= EDITÁVEL: ajustes visuais da seção ======= */
+.secao-contato {
+  background-color: var(--off-white);
+  padding: 5rem 1.5rem;
+}
+
+.contato-cabecalho {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 3rem;
+}
+
+.contato-cabecalho h2 {
+  font-size: 2.1rem;
+}
+
+.contato-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.contato-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.8rem;
+}
+
+.contato-icone {
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background-color: var(--bege);
+  color: var(--marrom);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contato-icone svg {
+  width: 20px;
+  height: 20px;
+}
+
+.contato-rotulo {
+  color: var(--dourado);
+  font-size: 0.72rem;
+  margin-bottom: 0.35rem;
+}
+
+/* Botões grandes o bastante pro dedo no celular (recomendação de acessibilidade
+   é pelo menos ~44px de altura de toque). */
+.contato-botoes {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  margin-top: 1.5rem;
+}
+
+.botao-contato {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  padding: 1rem 1.4rem;
+  border-radius: 4px;
+  background-color: var(--marrom-escuro);
+  color: var(--off-white);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  transition: background-color 0.25s ease;
+}
+
+.botao-contato:hover,
+.botao-contato:focus-visible {
+  background-color: var(--dourado);
+  color: var(--marrom-escuro);
+}
+
+.contato-mapa {
+  min-height: 320px;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 16px 32px rgba(43, 33, 26, 0.15);
+}
+
+.contato-mapa iframe {
+  width: 100%;
+  height: 100%;
+  min-height: 320px;
+  display: block;
+}
+
+@media (min-width: 860px) {
+  .contato-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: stretch;
+  }
+
+  .contato-botoes {
+    flex-direction: row;
+  }
+}
+
+/* ==========================================================================
+   RODAPÉ
+   ======= EDITÁVEL: ajustes visuais do rodapé ======= */
+.rodape {
+  background-color: var(--marrom-escuro);
+  color: var(--bege);
+  padding: 4rem 1.5rem 0;
+}
+
+.rodape-conteudo {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+  padding-bottom: 3rem;
+}
+
+.rodape-logo {
+  width: 170px;
+  margin-bottom: 1.2rem;
+}
+
+.rodape-coluna p {
+  font-size: 0.88rem;
+  line-height: 1.8;
+  margin-bottom: 0.5rem;
+}
+
+.rodape-coluna a:hover,
+.rodape-coluna a:focus-visible {
+  color: var(--dourado-claro);
+}
+
+.rodape-titulo {
+  color: var(--dourado);
+  margin-bottom: 1rem;
+}
+
+.rodape-base {
+  max-width: 1200px;
+  margin: 0 auto;
+  border-top: 1px solid rgba(217, 210, 197, 0.2);
+  /* O respiro extra embaixo (5.5rem) evita que o botão flutuante de
+     WhatsApp, que fica sempre fixo no canto, tampe esse texto quando
+     a página rolar até o fim — principalmente no celular. */
+  padding: 1.6rem 0 5.5rem;
+  text-align: center;
+}
+
+.rodape-base p {
+  font-size: 0.78rem;
+  line-height: 1.7;
+  color: rgba(217, 210, 197, 0.75);
+  margin-bottom: 0.5rem;
+}
+
+.rodape-aviso {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+@media (min-width: 700px) {
+  .rodape-conteudo {
+    grid-template-columns: 1.3fr 1fr 1fr;
+  }
+}
+
+/* ==========================================================================
+   PÁGINA DE DETALHE DE ÁREA (ex.: direito-trabalhista.html)
+   Usada nas páginas individuais de cada área de atuação.
+   ======= EDITÁVEL: ajustes visuais da página de área ======= */
+.trilha {
+  max-width: 900px;
+  margin: 0 auto 2rem;
+  padding: 0 1.5rem;
+  font-size: 0.82rem;
+  color: var(--marrom);
+}
+
+.trilha a:hover,
+.trilha a:focus-visible {
+  color: var(--dourado);
+  text-decoration: underline;
+}
+
+.secao-area-detalhe {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 7rem 1.5rem 5rem;
+}
+
+.area-detalhe-cabecalho {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.area-detalhe-icone {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background-color: var(--bege);
+  color: var(--marrom);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+}
+
+.area-detalhe-icone svg {
+  width: 34px;
+  height: 34px;
+}
+
+.area-detalhe-cabecalho h1 {
+  font-size: 2.3rem;
+  margin-bottom: 1rem;
+}
+
+.area-detalhe-cabecalho .capa-frase {
+  color: var(--texto);
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.area-detalhe-corpo h2 {
+  font-size: 1.5rem;
+  margin: 2.5rem 0 1rem;
+}
+
+.area-detalhe-corpo h2:first-child {
+  margin-top: 0;
+}
+
+.area-detalhe-corpo p {
+  margin-bottom: 1.2rem;
+  text-align: justify;
+}
+
+.area-detalhe-lista {
+  list-style: none;
+  margin: 0 0 1.5rem;
+}
+
+.area-detalhe-lista li {
+  position: relative;
+  padding-left: 1.3rem;
+  margin-bottom: 0.7rem;
+}
+
+.area-detalhe-lista li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--dourado);
+}
+
+.area-detalhe-cta {
+  margin-top: 3rem;
+  padding: 2.2rem;
+  border-radius: 6px;
+  background-color: var(--bege);
+  text-align: center;
+}
+
+.area-detalhe-cta p {
+  margin-bottom: 1.2rem;
+  text-align: center;
+}
+
+@media (min-width: 700px) {
+  .area-detalhe-cabecalho h1 {
+    font-size: 2.8rem;
+  }
+}
